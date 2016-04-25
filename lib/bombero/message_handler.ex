@@ -9,7 +9,7 @@ defmodule Bombero.MessageHandler do
     {:ok, game} = Game.start(sender)
 
     message = Game.message(game)
-    @messenger.send_generic_message(sender, message.text, message.options)
+    @messenger.send_button_message(sender, message.text, message.options)
   end
 
   def handle(message) do

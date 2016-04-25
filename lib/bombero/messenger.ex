@@ -2,7 +2,7 @@ defmodule Bombero.Messenger do
   @page_access_token System.get_env("FB_PAGE_ACCESS_TOKEN")
   @headers [{"Content-Type", "application/json"}]
 
-  def send_generic_message(recipient, text, options) do
+  def send_button_message(recipient, text, options) do
     options = Enum.with_index(options) |> Enum.map(fn ({option, index}) ->
       %{
         type: "postback",
