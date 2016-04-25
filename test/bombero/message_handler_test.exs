@@ -10,7 +10,7 @@ defmodule Bombero.MessageHandlerTest do
     assert game
 
     message = TestMessenger.messages |> List.first()
-    assert message.text == Game.message(game)
+    assert message.text == Game.message(game).text
   end
 
 
