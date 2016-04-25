@@ -51,9 +51,7 @@ defmodule Bombero.MessageHandler do
   end
 
   defp send_button_message(sender, text, options) when byte_size(text) > @max_character_limit do
-    split_near = round(byte_size(text) * 0.5)
-    # {first, second} = String.split_at(text, split_near)
-
+    split_near = round(byte_size(text) / 2)
     {first, second} = build_text('', String.to_char_list(text), split_near)
 
     @messenger.send_text_message(sender, first)
