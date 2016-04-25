@@ -31,31 +31,6 @@ defmodule Bombero.Router do
       MessageHandler.handle(event)
     end)
 
-    # payload = Poison.Parser.parse!(body, keys: :atoms)
-    # messaging_events = hd(payload.entry).messaging
-
-    # Enum.each(messaging_events, fn (event) ->
-    #   sender = event.sender.id
-    #
-    #   if Map.has_key?(event, :message) do
-    #
-    #     if event.message.text == "Generic" do
-    #       Onlywatch.Messenger.send_generic_message(sender)
-    #     else
-    #       Onlywatch.Messenger.send_text_message(sender, String.slice(event.message.text, 0..200))
-    #     end
-    #
-    #   else
-    #     if Map.has_key?(event, :postback) do
-    #       Onlywatch.Messenger.send_text_message(
-    #         sender,
-    #         "Postback received: #{String.slice(event.postback.payload, 0..200)}"
-    #       )
-    #     end
-    #   end
-    #
-    # end)
-
     send_resp(conn, 200, "Message received")
   end
 
