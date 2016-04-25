@@ -11,7 +11,7 @@ defmodule Bombero.Mixfile do
   end
 
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :cowboy, :plug, :httpoison],
      mod: {Bombero, []}]
   end
 
