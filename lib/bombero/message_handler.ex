@@ -3,6 +3,7 @@ defmodule Bombero.MessageHandler do
   alias Bombero.Game
 
   @messenger Application.get_env(:bombero, :messenger)
+  @max_character_limit 320
 
   def handle(postback = %{postback: %{payload: "START_GAME"}}) do
     sender = postback.sender.id
@@ -24,7 +25,8 @@ defmodule Bombero.MessageHandler do
 
         message = Game.message(game)
         state = Game.state(game)
-        @messenger.send_button_message(sender, message.text, build_options(state, message.options))
+
+        send_button_message(sender, message.text, build_options(state, message.options))
     end
   end
 
@@ -46,5 +48,35 @@ defmodule Bombero.MessageHandler do
         payload: "#{set}_OPTION_#{index+1}"
       }
     end)
+  end
+
+  defp send_button_message(sender, text, options) when byte_size(text) > @max_character_limit do
+    split_near = round(byte_size(text) * 0.5)
+    # {first, second} = String.split_at(text, split_near)
+
+    {first, second} = build_text('', String.to_char_list(text), split_near)
+
+    @messenger.send_text_message(sender, first)
+    send_button_message(sender, second, options)
+  end
+  defp send_button_message(sender, text, options) do
+    @messenger.send_button_message(sender, text, options)
+  end
+
+  defp build_text(result, text, limit) when length(result) > limit and hd(text) == ?\s do
+    first =
+      result
+      |> Enum.reverse()
+      |> List.to_string()
+
+    second =
+      text
+      |> List.to_string()
+      |> String.strip()
+
+    {first, second}
+  end
+  defp build_text(result, [c | rest], limit) do
+    build_text([ c | result ], rest, limit)
   end
 end

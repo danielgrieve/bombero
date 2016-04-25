@@ -22,14 +22,37 @@ defmodule Bombero.MessageHandlerTest do
     Subject.handle(option_1_message)
     assert Game.state(game) == :set_2
 
+    assert sent_message.text == "Sample text for set 2"
+
     options = sent_message.options
     assert Enum.map(options, &(Map.get(&1, :payload))) == ["SET_2_OPTION_1", "SET_2_OPTION_2", "SET_2_OPTION_3"]
     assert Enum.map(options, &(Map.get(&1, :title))) == ["Set 2: Option 1", "Set 2: Option 2", "Set 2: Option 3"]
   end
 
+  test "long messages" do
+    Game.start(sender.id)
+    Subject.handle(option_1_message)
+    TestMessenger.reset()
+
+    Subject.handle(option_2_message)
+
+    assert Enum.count(TestMessenger.text_messages) == 1
+    assert Enum.count(TestMessenger.button_messages) == 1
+
+    text_message = hd(TestMessenger.text_messages)
+    button_message = sent_message
+
+    assert text_message.text == "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ipsum diam, eleifend a nibh sit amet, tristique mollis dui. Aliquam erat volutpat. Cras massa felis,"
+    assert button_message.text == "porta ut metus nec, varius ullamcorper leo. Integer id vulputate ante. Cras vitae nisi fringilla, faucibus nulla eu, volutpat massa. Fusce euismod volutpat."
+  end
+
 
   defp option_1_message do
     postback_message("SET_1_OPTION_1")
+  end
+
+  defp option_2_message do
+    postback_message("SET_2_OPTION_1")
   end
 
   defp sent_message do
