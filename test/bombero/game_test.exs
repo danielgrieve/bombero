@@ -24,7 +24,7 @@ defmodule Bombero.GameTest do
   end
 
   test "handling an incoming payload", %{game: game} do
-    Game.handle_payload(game, :option_1)
+    Game.handle_payload(game, :set_1_option_1)
     assert Game.state(game) == :set_2
   end
 
@@ -33,7 +33,7 @@ defmodule Bombero.GameTest do
     assert message.text == "Sample text"
     assert message.options == ["Option 1", "Option 2"]
 
-    Game.handle_payload(game, :option_1)
+    Game.handle_payload(game, :set_1_option_1)
     message = Game.message(game)
     assert message.text == "Sample text for set 2"
     assert message.options == ["Set 2: Option 1", "Set 2: Option 2", "Set 2: Option 3"]

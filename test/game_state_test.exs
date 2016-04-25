@@ -12,10 +12,15 @@ defmodule GameStateTest do
   end
 
   test "set_1 events", %{subject: subject} do
-    option_1 = GameState.option_1(subject)
+    option_1 = GameState.choose(subject, :set_1_option_1)
     assert option_1.state == :set_2
 
-    option_2 = GameState.option_2(subject)
+    option_2 = GameState.choose(subject, :set_1_option_2)
     assert option_2.state == :set_3
+  end
+
+  test "sending an incorrect option", %{subject: subject} do
+    before_state = subject.state
+    assert GameState.choose(subject, :invalid).state == before_state
   end
 end

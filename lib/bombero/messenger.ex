@@ -3,14 +3,6 @@ defmodule Bombero.Messenger do
   @headers [{"Content-Type", "application/json"}]
 
   def send_button_message(recipient, text, options) do
-    options = Enum.with_index(options) |> Enum.map(fn ({option, index}) ->
-      %{
-        type: "postback",
-        title: option,
-        payload: "OPTION_#{index+1}"
-      }
-    end)
-
     payload = %{
       recipient: %{id: recipient},
 

@@ -10,7 +10,10 @@ defmodule Bombero.MessageHandlerTest do
     assert game
 
     assert sent_message.text == "Sample text"
-    assert sent_message.options == ["Option 1", "Option 2"]
+
+    options = sent_message.options
+    assert Enum.map(options, &(Map.get(&1, :payload))) == ["SET_1_OPTION_1", "SET_1_OPTION_2"]
+    assert Enum.map(options, &(Map.get(&1, :title))) == ["Option 1", "Option 2"]
   end
 
   test "option postbacks" do
@@ -18,13 +21,15 @@ defmodule Bombero.MessageHandlerTest do
 
     Subject.handle(option_1_message)
     assert Game.state(game) == :set_2
-    assert sent_message.text == "Sample text for set 2"
-    assert sent_message.options == ["Set 2: Option 1", "Set 2: Option 2", "Set 2: Option 3"]
+
+    options = sent_message.options
+    assert Enum.map(options, &(Map.get(&1, :payload))) == ["SET_2_OPTION_1", "SET_2_OPTION_2", "SET_2_OPTION_3"]
+    assert Enum.map(options, &(Map.get(&1, :title))) == ["Set 2: Option 1", "Set 2: Option 2", "Set 2: Option 3"]
   end
 
 
   defp option_1_message do
-    postback_message("OPTION_1")
+    postback_message("SET_1_OPTION_1")
   end
 
   defp sent_message do

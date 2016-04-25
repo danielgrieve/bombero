@@ -32,7 +32,7 @@ defmodule Bombero.Game do
 
   def handle_payload(game, pl) when is_atom(pl) do
     Agent.update(game, fn (game_state) ->
-      apply(GameState, pl, [game_state])
+      GameState.choose(game_state, pl)
     end)
   end
 
