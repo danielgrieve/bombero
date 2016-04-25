@@ -5,7 +5,8 @@ defmodule Bombero do
     import Supervisor.Spec, warn: false
 
     children = [
-      supervisor(Bombero.Game.Supervisor, [])
+      supervisor(Bombero.Game.Supervisor, []),
+      worker(Bombero.Server, [])
     ]
 
     opts = [strategy: :one_for_one, name: Bombero.Supervisor]

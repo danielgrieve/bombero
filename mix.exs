@@ -16,6 +16,10 @@ defmodule Bombero.Mixfile do
   end
 
   defp deps do
-    [{:fsm, "~> 0.2.0"}]
+    [{:fsm, "~> 0.2.0"},
+     {:cowboy, "~> 1.0"},
+     {:plug, "~> 1.0"},
+     {:httpoison, "~> 0.8.0"},
+     {:poison, "~> 2.0"}]
   end
 end
