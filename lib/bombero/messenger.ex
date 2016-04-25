@@ -7,7 +7,7 @@ defmodule Bombero.Messenger do
       %{
         type: "postback",
         title: option,
-        payload: "OPTION_#{index}"
+        payload: "OPTION_#{index+1}"
       }
     end)
 
