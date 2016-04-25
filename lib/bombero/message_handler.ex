@@ -12,6 +12,20 @@ defmodule Bombero.MessageHandler do
     @messenger.send_button_message(sender, message.text, message.options)
   end
 
+  def handle(postback = %{postback: %{payload: payload}}) do
+    sender = postback.sender.id
+
+    case Game.find(sender) do
+      nil -> :ok
+      game ->
+        payload = payload |> String.downcase() |> String.to_atom()
+        Game.handle_payload(game, payload)
+
+        message = Game.message(game)
+        @messenger.send_button_message(sender, message.text, message.options)
+    end
+  end
+
   def handle(message) do
     Logger.info "Unhandled message:\n#{inspect message}"
     :nothing
