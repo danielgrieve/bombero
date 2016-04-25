@@ -1,30 +1,17 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-# This configuration is loaded before any dependency and is restricted
-# to this project. If another project depends on this project, this
-# file won't be loaded nor affect the parent project. For this reason,
-# if you want to provide default values for your application for
-# 3rd-party users, it should be done in your "mix.exs" file.
+config :bombero, sets: %{
+  set_1: %{
+    text: "Your armor flashes in the sun as your greatsword strikes down the foes of the Empress Leanor, your sworn liege and the most radiant woman in the Three Long Kingdoms. But the enemies are strong, and they are legion.",
+    options: ["Stand Fast", "Fall Back"]
+  },
 
-# You can configure for your application as:
-#
-#     config :bombero, key: :value
-#
-# And access this configuration in your application as:
-#
-#     Application.get_env(:bombero, :key)
-#
-# Or configure a 3rd-party app:
-#
-#     config :logger, level: :info
-#
+  set_2: %{
+    text: "Your blade circles faster, your armor drips with the oily black blood of the southern manghouls. If this be your last battle, let it be your greatest. As the grey imps pile forward, biting and clawing at your greaves, you stand taller still, and bellow a curse on the Short King's name.",
+    options: ["Fight On", "Succumb"]
+  }
+}
 
-# It is also possible to import configuration files, relative to this
-# directory. For example, you can emulate configuration per environment
-# by uncommenting the line below and defining dev.exs, test.exs and such.
-# Configuration from the imported file will override the ones defined
-# here (which is why it is important to import them last).
-#
-#     import_config "#{Mix.env}.exs"
+if File.exists?("config/#{Mix.env}.exs") do
+  import_config "#{Mix.env}.exs"
+end
