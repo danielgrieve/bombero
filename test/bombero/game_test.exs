@@ -1,7 +1,7 @@
 defmodule Bombero.GameTest do
   use ExUnit.Case
 
-  alias Bombero.{Game, GameState}
+  alias Bombero.Game
 
   @id 123
 
