@@ -2,6 +2,6 @@
 
 Facebook Messenger bot for Bombero Games.
 
-## Games
+Currently deployed at [https://bombero.herokuapp.com][1]
 
-  * Retirement
+[1]: https://bombero.herokuapp.com
