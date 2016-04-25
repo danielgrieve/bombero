@@ -2,12 +2,16 @@ defmodule Bombero.MessageHandlerTest do
   use ExUnit.Case
 
   alias Bombero.MessageHandler, as: Subject
-  # alias Bombero.TestMessenger
+  alias Bombero.TestMessenger
 
   test "help message" do
-    # Subject.handle(help_message)
-    # Set up the messenger to store the messages sent rather than try and send
-    # them in tests.
+    Subject.handle(help_message)
+
+    assert Enum.count(TestMessenger.messages) == 1
+
+    message = TestMessenger.messages |> List.first()
+    assert message.recipient == sender.id
+    assert message.text =~ ~r/Here's some help/
   end
 
 

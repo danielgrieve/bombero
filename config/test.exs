@@ -11,3 +11,5 @@ config :bombero, sets: %{
     options: ["Set 2: Option 1", "Set 2: Option 2", "Set 2: Option 3"]
   }
 }
+
+config :bombero, messenger: Bombero.TestMessenger
