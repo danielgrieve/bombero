@@ -13,7 +13,10 @@ defmodule Bombero.Game do
 
 
   def find(id) do
-    :global.whereis_name({:game, id})
+    case :global.whereis_name({:game, id}) do
+      :undefined -> nil
+      pid -> pid
+    end
   end
 
   def stop(id) do

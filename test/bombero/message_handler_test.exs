@@ -2,23 +2,26 @@ defmodule Bombero.MessageHandlerTest do
   use BomberoCase
 
   alias Bombero.MessageHandler, as: Subject
-  alias Bombero.TestMessenger
+  alias Bombero.{Game, TestMessenger}
 
-  test "help message" do
-    Subject.handle(help_message)
-
-    assert Enum.count(TestMessenger.messages) == 1
+  test "start game message" do
+    Subject.handle(start_game_message)
+    game = Bombero.Game.find(sender.id)
+    assert game
 
     message = TestMessenger.messages |> List.first()
-    assert message.recipient == sender.id
-    assert message.text =~ ~r/Here's some help/
+    assert message.text == Game.message(game)
   end
 
 
-  defp help_message do
+  defp start_game_message do
+    postback_message("START_GAME")
+  end
+
+  defp postback_message(payload) do
     %{sender: sender,
-      message: %{
-        text: "help"
+      postback: %{
+        payload: payload
       }
     }
   end
