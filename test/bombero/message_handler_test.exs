@@ -9,8 +9,9 @@ defmodule Bombero.MessageHandlerTest do
     game = Bombero.Game.find(sender.id)
     assert game
 
-    message = TestMessenger.messages |> List.first()
+    message = TestMessenger.generic_messages |> List.first()
     assert message.text == Game.message(game).text
+    assert message.options == Game.message(game).options
   end
 
 
