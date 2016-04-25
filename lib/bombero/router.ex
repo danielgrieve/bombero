@@ -7,8 +7,8 @@ defmodule Bombero.Router do
   plug :match
   plug :dispatch
 
-  @validation_token System.get_env("FB_SECRET_TOKEN")
-  @page_access_token System.get_env("FB_PAGE_ACCESS_TOKEN")
+  @fb_verify_token System.get_env("FB_VERIFY_TOKEN")
+  @fb_page_access_token System.get_env("FB_PAGE_ACCESS_TOKEN")
 
   get "/webhook" do
     conn
@@ -25,7 +25,7 @@ defmodule Bombero.Router do
   end
 
   defp verify_token(conn = %{params: %{
-      "hub.verify_token" => @validation_token,
+      "hub.verify_token" => @fb_verify_token,
       "hub.challenge" => challenge
     }}) do
     send_resp(conn, 200, challenge)
