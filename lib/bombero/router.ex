@@ -1,6 +1,8 @@
 defmodule Bombero.Router do
   require Logger
 
+  alias Bombero.MessageHandler
+
   use Plug.Router
 
   plug Plug.Logger
