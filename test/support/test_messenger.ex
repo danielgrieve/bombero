@@ -24,6 +24,12 @@ defmodule Bombero.TestMessenger do
     end)
   end
 
+  def reset do
+    Agent.update(__MODULE__, fn (_) ->
+      %State{}
+    end)
+  end
+
   def send_text_message(recipient, text) do
     Agent.update(__MODULE__, fn (state) ->
       State.add_message(state, recipient, text)

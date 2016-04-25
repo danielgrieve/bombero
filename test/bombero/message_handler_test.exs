@@ -1,5 +1,5 @@
 defmodule Bombero.MessageHandlerTest do
-  use ExUnit.Case
+  use BomberoCase
 
   alias Bombero.MessageHandler, as: Subject
   alias Bombero.TestMessenger
