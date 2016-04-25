@@ -25,7 +25,7 @@ defmodule Bombero.GameState do
 
   defstate set_6 do
     defevent choose(:set_6_option_1), do: next_state(:set_7)
-    defevent choose(:set_6_option_2), do: next_state(:set_7)
+    defevent choose(:set_6_option_2), do: next_state(:set_8)
     defevent choose(:set_6_option_3), do: next_state(:set_11)
   end
 
