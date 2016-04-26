@@ -49,6 +49,6 @@ defmodule Bombero.Database do
     %{userinfo: userinfo, host: host, port: port, path: path}  = URI.parse(url)
     [username, password] = String.split(userinfo, ":")
     database = String.replace(path, "/", "")
-    [username: username, password: password, host: host, port: port, database: database]
+    [username: username, password: password, hostname: host, port: port, database: database]
   end
 end

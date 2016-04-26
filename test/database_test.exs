@@ -34,7 +34,7 @@ defmodule Bombero.DatabaseTest do
     assert Database.parse_url(example) == [
       username: "username",
       password: "password",
-      host: "host-name.example.com",
+      hostname: "host-name.example.com",
       port: 12345,
       database: "database_name"
     ]
