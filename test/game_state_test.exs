@@ -11,6 +11,10 @@ defmodule Bombero.GameStateTest do
     assert subject.state == :waiting_to_start
   end
 
+  test "new with id" do
+    assert GameState.new(123).data == 123
+  end
+
   test "starting game", %{subject: subject} do
     subject = GameState.choose(subject, :start_game)
     assert subject.state == :set_1

@@ -13,7 +13,7 @@ defmodule BomberoCase do
       end
 
       # Clear database between test runs
-      System.cmd("mongo", ~w'#{@mongo_database} db.getCollectionNames().forEach(function(n){db[n].remove()});')
+      System.cmd("mongo", ~w'#{@mongo_database} --eval db.getCollectionNames().forEach(function(n){db[n].drop()});')
     end
   end
 end

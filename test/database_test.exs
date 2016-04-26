@@ -14,4 +14,17 @@ defmodule Bombero.DatabaseTest do
 
     assert Database.game_state(player_id) == :set_1
   end
+
+  test "game state doesn't exist" do
+    refute Database.game_state(999)
+  end
+
+  test "updates the game state if it exists" do
+    player_id = 123
+
+    Database.save_game_state(player_id, :set_1)
+    Database.save_game_state(player_id, :set_2)
+
+    assert Database.game_state(player_id) == :set_2
+  end
 end

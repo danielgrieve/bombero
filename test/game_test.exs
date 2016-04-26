@@ -1,7 +1,7 @@
 defmodule Bombero.GameTest do
-  use ExUnit.Case
+  use BomberoCase
 
-  alias Bombero.Game
+  alias Bombero.{Database, Game}
 
   @id 123
 
@@ -26,9 +26,18 @@ defmodule Bombero.GameTest do
     Game.stop(456)
   end
 
+  test "starting a game with a player state in the database" do
+    Database.save_game_state(789, :set_3)
+
+    {:ok, game} = Game.start(789)
+    assert Game.state(game) == :set_3
+    Game.stop(789)
+  end
+
   test "handling an incoming payload", %{game: game} do
     Game.handle_payload(game, :set_1_option_1)
     assert Game.state(game) == :set_2
+    assert Database.game_state(@id) == :set_2
   end
 
   test "the message to send", %{game: game} do
@@ -46,5 +55,6 @@ defmodule Bombero.GameTest do
     Game.handle_payload(game, :set_1_option_1)
     Game.restart(game)
     assert Game.state(game) == :set_1
+    assert Database.game_state(@id) == :set_1
   end
 end

@@ -1,5 +1,5 @@
 defmodule Bombero.Game do
-  alias Bombero.GameState
+  alias Bombero.{Database, GameState}
 
   @sets Application.get_env(:bombero, :sets)
 
@@ -7,7 +7,12 @@ defmodule Bombero.Game do
 
   def start_link(id) do
     Agent.start_link(fn ->
-      GameState.new
+      game_state = GameState.new(id)
+
+      case Database.game_state(id) do
+        nil -> game_state
+        state -> %{ game_state | state: state }
+      end
     end, name: {:global, {:game, id}})
   end
 
@@ -32,7 +37,9 @@ defmodule Bombero.Game do
 
   def handle_payload(game, pl) when is_atom(pl) do
     Agent.update(game, fn (game_state) ->
-      GameState.choose(game_state, pl)
+      gs = GameState.choose(game_state, pl)
+      Database.save_game_state(gs.data, gs.state)
+      gs
     end)
   end
 
@@ -44,7 +51,9 @@ defmodule Bombero.Game do
 
   def restart(game) do
     Agent.update(game, fn (game_state) ->
-      GameState.restart(game_state)
+      gs = GameState.restart(game_state)
+      Database.save_game_state(gs.data, gs.state)
+      gs
     end)
   end
 

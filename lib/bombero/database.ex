@@ -4,6 +4,7 @@ defmodule Bombero.Database do
   alias Bombero.Database.Pool
 
   @database Application.get_env(:bombero, __MODULE__)[:database]
+  @collection "player-game-states"
 
   def start_link do
     Pool.start_link(database: @database)
@@ -15,18 +16,27 @@ defmodule Bombero.Database do
 
 
   def save_game_state(player_id, state) do
-    Mongo.insert_one(
+    Mongo.replace_one(
       Pool,
-      "player_game_states",
-      %{"player_id" => player_id, "state" => state}
+      @collection,
+      %{"player_id" => player_id},
+      %{"player_id" => player_id, "state" => state},
+      [{:upsert, true}]
     )
   end
 
   def game_state(player_id) do
-    Mongo.find(Pool, "player_game_states", %{"player_id" => player_id})
-    |> Enum.to_list()
-    |> List.first()
-    |> Map.get("state")
-    |> String.to_atom()
+    player =
+      Mongo.find(Pool, @collection, %{"player_id" => player_id})
+      |> Enum.to_list()
+      |> List.first()
+
+    case player do
+      nil -> nil
+      player ->
+        player
+        |> Map.get("state")
+        |> String.to_atom()
+    end
   end
 end
