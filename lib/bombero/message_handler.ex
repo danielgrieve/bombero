@@ -16,11 +16,20 @@ defmodule Bombero.MessageHandler do
 
   def handle(postback = %{postback: %{payload: "START_GAME"}}) do
     sender = postback.sender.id
-    {:ok, game} = Game.start(sender)
+
+    game =
+      case Game.find(sender) do
+        nil ->
+          {:ok, game} = Game.start(sender)
+          game
+        game -> game
+      end
+
+    Game.handle_payload(game, :start_game)
 
     message = Game.message(game)
     state = Game.state(game)
-    @messenger.send_button_message(sender, message.text, build_options(state, message.options))
+    send_button_message(sender, message.text, build_options(state, message.options))
   end
 
   def handle(postback = %{postback: %{payload: payload}}) do
@@ -71,6 +80,8 @@ defmodule Bombero.MessageHandler do
   end
 
   defp send_welcome_message(sender) do
+    Game.start(sender)
+
     @messenger.send_generic_message(
       sender,
       "Welcome to Bombero Games",

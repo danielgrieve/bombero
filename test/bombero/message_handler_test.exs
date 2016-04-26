@@ -15,6 +15,16 @@ defmodule Bombero.MessageHandlerTest do
     assert option.payload == "START_GAME"
   end
 
+  test "sending more messages" do
+    Subject.handle(text_message("Hello there"))
+
+    TestMessenger.reset()
+
+    Subject.handle(text_message("More"))
+
+    assert Enum.count(TestMessenger.generic_messages) == 0
+  end
+
   test "start game postback" do
     Subject.handle(start_game_message)
     game = Bombero.Game.find(sender.id)
@@ -28,7 +38,7 @@ defmodule Bombero.MessageHandlerTest do
   end
 
   test "option postbacks" do
-    {:ok, game} = Game.start(sender.id)
+    game = start_game(sender.id)
 
     Subject.handle(option_1_message)
     assert Game.state(game) == :set_2
@@ -41,7 +51,7 @@ defmodule Bombero.MessageHandlerTest do
   end
 
   test "long messages" do
-    Game.start(sender.id)
+    start_game(sender.id)
     Subject.handle(option_1_message)
     TestMessenger.reset()
 
@@ -80,6 +90,12 @@ defmodule Bombero.MessageHandlerTest do
         payload: payload
       }
     }
+  end
+
+  defp start_game(id) do
+    {:ok, game} = Game.start(id)
+    Game.handle_payload(game, :start_game)
+    game
   end
 
   defp text_message(text) do

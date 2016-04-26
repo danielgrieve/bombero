@@ -8,10 +8,17 @@ defmodule GameStateTest do
   end
 
   test "initial state", %{subject: subject} do
+    assert subject.state == :waiting_to_start
+  end
+
+  test "starting game", %{subject: subject} do
+    subject = GameState.choose(subject, :start_game)
     assert subject.state == :set_1
   end
 
   test "set_1 events", %{subject: subject} do
+    subject = GameState.choose(subject, :start_game)
+
     option_1 = GameState.choose(subject, :set_1_option_1)
     assert option_1.state == :set_2
 

@@ -1,5 +1,9 @@
 defmodule Bombero.GameState do
-  use Fsm, initial_state: :set_1
+  use Fsm, initial_state: :waiting_to_start
+
+  defstate waiting_to_start do
+    defevent choose(:start_game), do: next_state(:set_1)
+  end
 
   defstate set_1 do
     defevent choose(:set_1_option_1), do: next_state(:set_2)

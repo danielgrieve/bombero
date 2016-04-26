@@ -7,6 +7,7 @@ defmodule Bombero.GameTest do
 
   setup do
     {:ok, game} = Game.start(@id)
+    Game.handle_payload(game, :start_game)
 
     on_exit fn ->
       Game.stop(@id)
@@ -19,8 +20,10 @@ defmodule Bombero.GameTest do
     assert Game.find(@id) == game
   end
 
-  test "starting a new game", %{game: game} do
-    assert Game.state(game) == :set_1
+  test "starting a new game" do
+    {:ok, game} = Game.start(456)
+    assert Game.state(game) == :waiting_to_start
+    Game.stop(456)
   end
 
   test "handling an incoming payload", %{game: game} do
