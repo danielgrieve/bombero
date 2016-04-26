@@ -4,7 +4,11 @@ defmodule BomberoCase do
   setup do
     on_exit fn ->
       Bombero.TestMessenger.reset
-      Bombero.Game.stop(123456)
+
+      # TODO Replace hard-coded ID with something more robust
+      if Bombero.Game.find(123456) do
+        Bombero.Game.stop(123456)
+      end
     end
   end
 end
