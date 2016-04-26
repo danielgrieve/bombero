@@ -20,6 +20,12 @@ defmodule Bombero.GameTest do
     assert Game.find(@id) == game
   end
 
+  test "finding a game with existing state" do
+    Database.save_game_state(789, :set3)
+    game = Game.find(789)
+    assert Game.state(game) == :set3
+  end
+
   test "starting a new game" do
     {:ok, game} = Game.start(456)
     assert Game.state(game) == :waiting_to_start

@@ -19,7 +19,13 @@ defmodule Bombero.Game do
 
   def find(id) do
     case :global.whereis_name({:game, id}) do
-      :undefined -> nil
+      :undefined ->
+        case Database.game_state(id) do
+          nil -> nil
+          _state ->
+            {:ok, game} = start_link(id)
+            game
+        end
       pid -> pid
     end
   end
