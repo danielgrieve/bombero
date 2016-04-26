@@ -25,6 +25,17 @@ defmodule Bombero.MessageHandlerTest do
     assert Enum.count(TestMessenger.generic_messages) == 0
   end
 
+  test "help message for new players" do
+    Subject.handle(text_message("help"))
+
+    message = hd(TestMessenger.generic_messages)
+    assert message.title == "Help is on the way"
+
+    options = message.options
+    assert Enum.map(options, &(Map.get(&1, :payload))) == ["START_GAME"]
+    assert Enum.map(options, &(Map.get(&1, :title))) == ["Start New Game"]
+  end
+
   test "start game postback" do
     Subject.handle(start_game_message)
     game = Bombero.Game.find(sender.id)
