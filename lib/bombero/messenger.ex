@@ -18,7 +18,30 @@ defmodule Bombero.Messenger do
       }
     }
 
-    HTTPoison.post!(url, Poison.encode!(payload), @headers)
+    post_payload(payload)
+  end
+
+  def send_generic_message(recipient, title, options) do
+    payload = %{
+      recipient: %{id: recipient},
+
+      message: %{
+        attachment: %{
+          type: "template",
+
+          payload: %{
+            template_type: "generic",
+
+            elements: [%{
+              title: title,
+              buttons: options
+            }]
+          }
+        }
+      }
+    }
+
+    post_payload(payload)
   end
 
   def send_text_message(recipient, text) do
@@ -30,9 +53,13 @@ defmodule Bombero.Messenger do
       }
     }
 
-    HTTPoison.post!(url, Poison.encode!(payload), @headers)
+    post_payload(payload)
   end
 
+
+  defp post_payload(payload) do
+    HTTPoison.post!(url, Poison.encode!(payload), @headers)
+  end
 
   defp url do
     "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}"

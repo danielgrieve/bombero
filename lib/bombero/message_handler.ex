@@ -5,6 +5,15 @@ defmodule Bombero.MessageHandler do
   @messenger Application.get_env(:bombero, :messenger)
   @max_character_limit 320
 
+  def handle(message = %{message: %{text: text}}) do
+    sender = message.sender.id
+
+    case Game.find(sender) do
+      nil -> send_welcome_message(sender)
+      _ -> :ok
+    end
+  end
+
   def handle(postback = %{postback: %{payload: "START_GAME"}}) do
     sender = postback.sender.id
     {:ok, game} = Game.start(sender)
@@ -59,6 +68,20 @@ defmodule Bombero.MessageHandler do
   end
   defp send_button_message(sender, text, options) do
     @messenger.send_button_message(sender, text, options)
+  end
+
+  defp send_welcome_message(sender) do
+    @messenger.send_generic_message(
+      sender,
+      "Welcome to Bombero Games",
+      [
+        %{
+          type: "postback",
+          title: "Player One Start",
+          payload: "START_GAME"
+        }
+      ]
+    )
   end
 
   defp build_text(result, text, limit) when length(result) > limit and hd(text) == ?\s do

@@ -4,6 +4,17 @@ defmodule Bombero.MessageHandlerTest do
   alias Bombero.MessageHandler, as: Subject
   alias Bombero.{Game, TestMessenger}
 
+  test "initial message" do
+    Subject.handle(text_message("Hello there"))
+
+    message = hd(TestMessenger.generic_messages)
+    assert message.title == "Welcome to Bombero Games"
+
+    option = hd(message.options)
+    assert option.title == "Player One Start"
+    assert option.payload == "START_GAME"
+  end
+
   test "start game postback" do
     Subject.handle(start_game_message)
     game = Bombero.Game.find(sender.id)
@@ -67,6 +78,14 @@ defmodule Bombero.MessageHandlerTest do
     %{sender: sender,
       postback: %{
         payload: payload
+      }
+    }
+  end
+
+  defp text_message(text) do
+    %{sender: sender,
+      message: %{
+        text: text
       }
     }
   end

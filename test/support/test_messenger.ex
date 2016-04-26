@@ -1,11 +1,18 @@
 defmodule Bombero.TestMessenger.State do
-  defstruct button_messages: [], text_messages: []
+  defstruct button_messages: [], generic_messages: [], text_messages: []
 
   def add_button_message(state, recipient, text, options) do
     message = %{recipient: recipient, text: text, options: options}
 
     state
     |> Map.put(:button_messages, [ message | state.button_messages ])
+  end
+
+  def add_generic_message(state, recipient, title, options) do
+    message = %{recipient: recipient, title: title, options: options}
+
+    state
+    |> Map.put(:generic_messages, [ message | state.generic_messages ])
   end
 
   def add_text_message(state, recipient, text) do
@@ -31,6 +38,12 @@ defmodule Bombero.TestMessenger do
     end)
   end
 
+  def generic_messages do
+    Agent.get(__MODULE__, fn (state) ->
+      state.generic_messages
+    end)
+  end
+
   def text_messages do
     Agent.get(__MODULE__, fn (state) ->
       state.text_messages
@@ -46,6 +59,12 @@ defmodule Bombero.TestMessenger do
   def send_button_message(recipient, text, options) do
     Agent.update(__MODULE__, fn (state) ->
       State.add_button_message(state, recipient, text, options)
+    end)
+  end
+
+  def send_generic_message(recipient, title, options) do
+    Agent.update(__MODULE__, fn (state) ->
+      State.add_generic_message(state, recipient, title, options)
     end)
   end
 
