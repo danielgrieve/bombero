@@ -127,6 +127,9 @@ defmodule Bombero.GameState do
     defevent choose(:set_25_option_1), do: next_state(:set_1)
   end
 
+  defevent restart do
+    next_state(:set_1)
+  end
 
   defevent _, state: state do
     next_state(state)

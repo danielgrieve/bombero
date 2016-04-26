@@ -42,6 +42,12 @@ defmodule Bombero.Game do
     end)
   end
 
+  def restart(game) do
+    Agent.update(game, fn (game_state) ->
+      GameState.restart(game_state)
+    end)
+  end
+
 
   defp fetch_message(state) do
     Map.get(@sets, state)

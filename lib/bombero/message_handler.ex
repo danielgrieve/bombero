@@ -11,6 +11,24 @@ defmodule Bombero.MessageHandler do
     |> handle_text()
   end
 
+  def handle(postback = %{postback: %{payload: "RESTART_GAME"}}) do
+    sender = postback.sender.id
+
+    game =
+      case Game.find(sender) do
+        nil ->
+          {:ok, game} = Game.start(sender)
+
+        game->
+          game
+      end
+
+    Game.restart(game)
+    message = Game.message(game)
+    state = Game.state(game)
+    send_button_message(sender, message.text, build_options(state, message.options))
+  end
+
   def handle(postback = %{postback: %{payload: "START_GAME"}}) do
     sender = postback.sender.id
 
@@ -112,17 +130,28 @@ defmodule Bombero.MessageHandler do
   defp handle_text(message = %{message: %{text: "help"}}) do
     sender = message.sender.id
 
-    @messenger.send_generic_message(
-      sender,
-      "Help is on the way",
-      [
-        %{
-          type: "postback",
-          title: "Start New Game",
-          payload: "START_GAME"
-        }
-      ]
-    )
+    options =
+      case Game.find(sender) do
+        nil ->
+          [
+            %{
+              type: "postback",
+              title: "Start New Game",
+              payload: "START_GAME"
+            }
+          ]
+
+        _ ->
+          [
+            %{
+              type: "postback",
+              title: "Restart Game",
+              payload: "RESTART_GAME"
+            }
+          ]
+      end
+
+    @messenger.send_generic_message(sender, "Help is on the way", options)
   end
 
   defp handle_text(message = %{message: %{text: _}}) do

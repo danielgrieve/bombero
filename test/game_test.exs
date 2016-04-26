@@ -41,4 +41,10 @@ defmodule Bombero.GameTest do
     assert message.text == "Sample text for set 2"
     assert message.options == ["Set 2: Option 1", "Set 2: Option 2", "Set 2: Option 3"]
   end
+
+  test "restarting game", %{game: game} do
+    Game.handle_payload(game, :set_1_option_1)
+    Game.restart(game)
+    assert Game.state(game) == :set_1
+  end
 end
