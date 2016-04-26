@@ -1,4 +1,4 @@
-defmodule GameStateTest do
+defmodule Bombero.GameStateTest do
   use ExUnit.Case
 
   alias Bombero.GameState

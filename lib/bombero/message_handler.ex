@@ -5,7 +5,7 @@ defmodule Bombero.MessageHandler do
   @messenger Application.get_env(:bombero, :messenger)
   @max_character_limit 320
 
-  def handle(message = %{message: %{text: text}}) do
+  def handle(message = %{message: %{text: _}}) do
     sender = message.sender.id
 
     case Game.find(sender) do
