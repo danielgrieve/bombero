@@ -4,10 +4,15 @@ defmodule Bombero.Database do
   alias Bombero.Database.Pool
 
   @database Application.get_env(:bombero, __MODULE__)[:database]
+  @database_url Application.get_env(:bombero, __MODULE__)[:database_url]
   @collection "player-game-states"
 
   def start_link do
-    Pool.start_link(database: @database)
+    if @database_url do
+      Pool.start_link(parse_url(@database_url))
+    else
+      Pool.start_link(database: @database)
+    end
   end
 
   def stop do
@@ -38,5 +43,12 @@ defmodule Bombero.Database do
         |> Map.get("state")
         |> String.to_atom()
     end
+  end
+
+  def parse_url(url) do
+    %{userinfo: userinfo, host: host, port: port, path: path}  = URI.parse(url)
+    [username, password] = String.split(userinfo, ":")
+    database = String.replace(path, "/", "")
+    [username: username, password: password, host: host, port: port, database: database]
   end
 end

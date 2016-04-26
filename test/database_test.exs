@@ -27,4 +27,16 @@ defmodule Bombero.DatabaseTest do
 
     assert Database.game_state(player_id) == :set_2
   end
+
+  test "parsing a database URL" do
+    example = "mongodb://username:password@host-name.example.com:12345/database_name"
+
+    assert Database.parse_url(example) == [
+      username: "username",
+      password: "password",
+      host: "host-name.example.com",
+      port: 12345,
+      database: "database_name"
+    ]
+  end
 end
