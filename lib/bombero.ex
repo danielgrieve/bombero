@@ -6,7 +6,8 @@ defmodule Bombero do
 
     children = [
       supervisor(Bombero.Game.Supervisor, []),
-      worker(Bombero.Server, [])
+      worker(Bombero.Server, []),
+      worker(Bombero.Database, [])
     ]
 
     opts = [strategy: :one_for_one, name: Bombero.Supervisor]

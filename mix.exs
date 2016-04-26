@@ -12,7 +12,7 @@ defmodule Bombero.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :cowboy, :plug, :httpoison],
+    [applications: [:logger, :cowboy, :plug, :httpoison, :mongodb, :poolboy],
      mod: {Bombero, []}]
   end
 
@@ -24,6 +24,8 @@ defmodule Bombero.Mixfile do
      {:cowboy, "~> 1.0"},
      {:plug, "~> 1.0"},
      {:httpoison, "~> 0.8.0"},
-     {:poison, "~> 2.0"}]
+     {:poison, "~> 2.0"},
+     {:mongodb, "~> 0.1"},
+     {:poolboy, "~> 1.5"}]
   end
 end

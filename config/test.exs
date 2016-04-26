@@ -18,3 +18,6 @@ config :bombero, sets: %{
 }
 
 config :bombero, messenger: Bombero.TestMessenger
+
+config :bombero, Bombero.Database,
+  database: "bombero-test"
