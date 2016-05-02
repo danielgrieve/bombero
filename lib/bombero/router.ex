@@ -10,7 +10,6 @@ defmodule Bombero.Router do
   plug :dispatch
 
   @fb_verify_token System.get_env("FB_VERIFY_TOKEN")
-  @fb_page_access_token System.get_env("FB_PAGE_ACCESS_TOKEN")
 
   get "/webhook" do
     conn
@@ -27,9 +26,7 @@ defmodule Bombero.Router do
     |> Map.get(:entry)
     |> hd()
     |> Map.get(:messaging)
-    |> Enum.each(fn (event) ->
-      MessageHandler.handle(event)
-    end)
+    |> Enum.each(&MessageHandler.handle/1)
 
     send_resp(conn, 200, "Message received")
   end
