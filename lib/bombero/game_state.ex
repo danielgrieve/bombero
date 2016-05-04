@@ -1,7 +1,12 @@
 defmodule Bombero.GameState do
   use Fsm, initial_state: :waiting_to_start, initial_data: 0
 
-  def new(id), do: %{ new | data: id }
+  alias Bombero.GameStateData
+
+  def new(id) do
+    data = %GameStateData{id: id}
+    %{ new | data: data }
+  end
 
   defstate waiting_to_start do
     defevent choose(:start_game), do: next_state(:set_1)

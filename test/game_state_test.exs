@@ -12,7 +12,8 @@ defmodule Bombero.GameStateTest do
   end
 
   test "new with id" do
-    assert GameState.new(123).data == 123
+    data = GameState.new(123).data
+    assert data.id == 123
   end
 
   test "starting game", %{subject: subject} do

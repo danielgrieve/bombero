@@ -44,7 +44,7 @@ defmodule Bombero.Game do
   def handle_payload(game, pl) when is_atom(pl) do
     Agent.update(game, fn (game_state) ->
       gs = GameState.choose(game_state, pl)
-      Database.save_game_state(gs.data, gs.state)
+      Database.save_game_state(gs.data.id, gs.state)
       gs
     end)
   end
@@ -58,7 +58,7 @@ defmodule Bombero.Game do
   def restart(game) do
     Agent.update(game, fn (game_state) ->
       gs = GameState.restart(game_state)
-      Database.save_game_state(gs.data, gs.state)
+      Database.save_game_state(gs.data.id, gs.state)
       gs
     end)
   end
