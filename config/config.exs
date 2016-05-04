@@ -139,7 +139,7 @@ config :bombero, sets: %{
   },
 
   set_28: %{
-    text: "As a Protector, you stood close enough to touch the Empress daily -- though to do so in the Palace halls would have disgraced her name and yours. Enough to watch her lips as they commanded you, to steal a glance at her eyes of..."
+    text: "As a Protector, you stood close enough to touch the Empress daily. To do so in the Palace halls, however, would have disgraced her name and yours. Enough to watch her lips as they commanded you, to steal a glance at her eyes of..."
     options: ["Green?", "Red?", "Moonlight grey?"]
   },
 
@@ -250,7 +250,7 @@ config :bombero, sets: %{
   },
 
   set_43: %{
-    text: "You are halfway up the tumbledown tower when something starts to give. A stone falls from the parapet to land at your feet, cracking the flags beneath you. Mortar gives way -- the tower is collapsing."
+    text: "You are halfway up the tumbledown tower when something starts to give. A stone falls from the parapet to land at your feet, cracking the flags beneath you. Mortar gives way as the tower begins to collapse."
     options: ["Back down!", "Leap up!", "Jump!"]
   },
 
@@ -290,7 +290,7 @@ config :bombero, sets: %{
   },
 
   set_51: %{
-    text: "You manage to shift the stone -- its shape familiar to you from hours of standing watch -- and pluck up the scrap of white silk before the breeze can carry it away."
+    text: "You manage to shift the stone, its shape familiar to you from hours of standing watch, and pluck up the scrap of white silk before the breeze can carry it away."
     options: ["Examine the cloth"]
   },
 
