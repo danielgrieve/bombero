@@ -26,6 +26,8 @@ defmodule Bombero.Mixfile do
      {:httpoison, "~> 0.8.0"},
      {:poison, "~> 2.0"},
      {:mongodb, "~> 0.1"},
-     {:poolboy, "~> 1.5"}]
+     {:poolboy, "~> 1.5"},
+
+     {:ex_guard, "~> 1.1.0", only: :dev}]
   end
 end
