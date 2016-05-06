@@ -216,8 +216,19 @@ defmodule Bombero.GameState do
   #   If Option 1 is chosen and boxOpened == True, goto Set 35
   #   else goto Set 38
   defstate set_34 do
-    defevent choose(:set_34_option_1), do: next_state(:set_38)
-    defevent choose(:set_34_option_2), do: next_state(:set_39)
+    defevent choose(:set_34_option_1), data: data do
+      data = add_set_34_flags(data)
+      next_state(:set_38, data)
+    end
+
+    defevent choose(:set_34_option_2), data: data do
+      data = add_set_34_flags(data)
+      next_state(:set_39, data)
+    end
+  end
+
+  defp add_set_34_flags(data) do
+    %{ data | character_armor: "plate", armor_worn: true }
   end
 
   # The branch from Set 35, Option 2 is supposed to test a flag:

@@ -73,4 +73,14 @@ defmodule Bombero.GameStateTest do
 
     assert subject.data.plate_polished == true
   end
+
+  test "set_34", %{subject: subject} do
+    subject =
+      subject
+      |> Map.put(:state, :set_34)
+      |> GameState.choose(:set_34_option_1)
+
+    assert subject.data.character_armor == "plate"
+    assert subject.data.armor_worn == true
+  end
 end

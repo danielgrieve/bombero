@@ -166,9 +166,6 @@ config :bombero, sets: %{
     options: ["Wear the armor"]
   },
 
-  # Set 34 should set two flags:
-  #   characterArmor = "plate"
-  #   armorWorn = "true"
   set_34: %{
     text: "You struggle into your heavy armor. As it settles on your shoulders, you imagine you feel some of the power of your youth. But you notice the leather armature beneath the plate is fraying. Would these pieces really stand against a determined foe?",
     options: ["Take off the armor", "Leave the farmhouse"]
