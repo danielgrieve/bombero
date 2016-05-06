@@ -64,4 +64,13 @@ defmodule Bombero.GameStateTest do
 
     assert subject.data.box_opened == true
   end
+
+  test "set_33", %{subject: subject} do
+    subject =
+      subject
+      |> Map.put(:state, :set_33)
+      |> GameState.choose(:set_33_option_1)
+
+    assert subject.data.plate_polished == true
+  end
 end

@@ -161,8 +161,6 @@ config :bombero, sets: %{
     options: ["Polish the armor", "Wear the armor"]
   },
 
-  # Set 33 should set a flag:
-  #   platePolished = "true"
   set_33: %{
     text: "As you work the rags against the metal surfaces, your armor starts to shine as it once did at Bandle's Crossing and on fields of battle throughout the realm.",
     options: ["Wear the armor"]

@@ -207,7 +207,9 @@ defmodule Bombero.GameState do
   #   If Option 1 is chosen and armorWorn == False, goto Set 34
   #   else goto Set 37
   defstate set_33 do
-    defevent choose(:set_33_option_1), do: next_state(:set_34)
+    defevent choose(:set_33_option_1), data: data do
+      next_state(:set_34, %{ data | plate_polished: true })
+    end
   end
 
   # The branch from Set 34, Option 1 is supposed to test a flag:
