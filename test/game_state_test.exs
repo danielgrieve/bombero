@@ -3,8 +3,14 @@ defmodule Bombero.GameStateTest do
 
   alias Bombero.GameState
 
-  setup do
-    {:ok, %{subject: GameState.new}}
+  setup config do
+    game_state = GameState.new
+
+    if state = config[:state] do
+      game_state = %{ game_state | state: state }
+    end
+
+    {:ok, %{subject: game_state}}
   end
 
   test "initial state", %{subject: subject} do
@@ -56,58 +62,40 @@ defmodule Bombero.GameStateTest do
     assert subject.data.box_opened == false
   end
 
+  @tag state: :set_31
   test "set_31", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_31)
-      |> GameState.choose(:set_31_option_1)
-
+    subject = GameState.choose(subject, :set_31_option_1)
     assert subject.data.box_opened == true
   end
 
+  @tag state: :set_33
   test "set_33", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_33)
-      |> GameState.choose(:set_33_option_1)
-
+    subject = GameState.choose(subject, :set_33_option_1)
     assert subject.data.plate_polished == true
   end
 
+  @tag state: :set_34
   test "set_34", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_34)
-      |> GameState.choose(:set_34_option_1)
-
+    subject = GameState.choose(subject, :set_34_option_1)
     assert subject.data.character_armor == "plate"
     assert subject.data.armor_worn == true
   end
 
+  @tag state: :set_35
   test "set_35", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_35)
-      |> GameState.choose(:set_35_option_1)
-
+    subject = GameState.choose(subject, :set_35_option_1)
     assert subject.data.character_armor == nil
   end
 
+  @tag state: :set_37
   test "set_37", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_37)
-      |> GameState.choose(:set_37_option_1)
-
+    subject = GameState.choose(subject, :set_37_option_1)
     assert subject.data.character_armor == "plate"
   end
 
+  @tag state: :set_38
   test "set_38", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_38)
-      |> GameState.choose(:set_38_option_1)
-
+    subject = GameState.choose(subject, :set_38_option_1)
     assert subject.data.character_armor == nil
   end
 end
