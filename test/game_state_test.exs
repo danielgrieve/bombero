@@ -101,4 +101,13 @@ defmodule Bombero.GameStateTest do
 
     assert subject.data.character_armor == "plate"
   end
+
+  test "set_38", %{subject: subject} do
+    subject =
+      subject
+      |> Map.put(:state, :set_38)
+      |> GameState.choose(:set_38_option_1)
+
+    assert subject.data.character_armor == nil
+  end
 end

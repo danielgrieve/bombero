@@ -267,8 +267,19 @@ defmodule Bombero.GameState do
   #   If Option 2 is chosen and armorWorn == False, goto Set 34
   #   else goto Set 37
   defstate set_38 do
-    defevent choose(:set_38_option_1), do: next_state(:set_31)
-    defevent choose(:set_38_option_2), do: next_state(:set_34)
+    defevent choose(:set_38_option_1), data: data do
+      data = add_set_38_flags(data)
+      next_state(:set_31, data)
+    end
+
+    defevent choose(:set_38_option_2), data: data do
+      data = add_set_38_flags(data)
+      next_state(:set_34, data)
+    end
+  end
+
+  defp add_set_38_flags(data) do
+    %{ data | character_armor: nil }
   end
 
   defstate set_39 do
