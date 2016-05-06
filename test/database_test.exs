@@ -1,31 +1,24 @@
 defmodule Bombero.DatabaseTest do
   use BomberoCase
 
-  alias Bombero.Database
+  alias Bombero.{Database, GameState}
 
-  test "persisting and retrieving game state" do
-    player_id = 123
+  @player_id 123
 
-    Database.save_game_state(player_id, :set_1)
-    assert Database.game_state(player_id) == :set_1
-
-    Database.stop
-    :timer.sleep(100) # Hopefully the database has restarted by now
-
-    assert Database.game_state(player_id) == :set_1
+  test "persisting and retrieving the game" do
+    state = GameState.new(@player_id)
+    Database.save_game(state)
+    assert Database.game(@player_id) == state
   end
 
-  test "game state doesn't exist" do
-    refute Database.game_state(999)
+  test "game doesn't exist" do
+    refute Database.game(999)
   end
 
-  test "updates the game state if it exists" do
-    player_id = 123
-
-    Database.save_game_state(player_id, :set_1)
-    Database.save_game_state(player_id, :set_2)
-
-    assert Database.game_state(player_id) == :set_2
+  test "updates the game if it exists" do
+    state = %{ GameState.new(@player_id) | state: :another_state }
+    Database.save_game(state)
+    assert Database.game(@player_id).state == :another_state
   end
 
   test "parsing a database URL" do

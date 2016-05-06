@@ -7,11 +7,9 @@ defmodule Bombero.Game do
 
   def start_link(id) do
     Agent.start_link(fn ->
-      game_state = GameState.new(id)
-
-      case Database.game_state(id) do
-        nil -> game_state
-        state -> %{ game_state | state: state }
+      case Database.game(id) do
+        nil -> GameState.new(id)
+        state -> state
       end
     end, name: {:global, {:game, id}})
   end
@@ -20,7 +18,7 @@ defmodule Bombero.Game do
   def find(id) do
     case :global.whereis_name({:game, id}) do
       :undefined ->
-        case Database.game_state(id) do
+        case Database.game(id) do
           nil -> nil
           _state ->
             {:ok, game} = start_link(id)
@@ -44,7 +42,7 @@ defmodule Bombero.Game do
   def handle_payload(game, pl) when is_atom(pl) do
     Agent.update(game, fn (game_state) ->
       gs = GameState.choose(game_state, pl)
-      Database.save_game_state(gs.data.id, gs.state)
+      Database.save_game(gs)
       gs
     end)
   end
@@ -58,7 +56,7 @@ defmodule Bombero.Game do
   def restart(game) do
     Agent.update(game, fn (game_state) ->
       gs = GameState.restart(game_state)
-      Database.save_game_state(gs.data.id, gs.state)
+      Database.save_game(gs)
       gs
     end)
   end
