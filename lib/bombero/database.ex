@@ -22,7 +22,7 @@ defmodule Bombero.Database do
 
   def game(player_id) do
     game =
-      Mongo.find(Pool, @collection, %{"data" => %{"id" => player_id}})
+      Mongo.find(Pool, @collection, %{"data.id" => player_id})
       |> Enum.to_list()
       |> List.first()
       |> string_keys_to_atom_keys()
@@ -45,7 +45,7 @@ defmodule Bombero.Database do
     Mongo.replace_one(
       Pool,
       @collection,
-      %{"data" => %{"id" => game_state.data.id}},
+      %{"data.id" => game_state.data.id},
       game_state,
       [{:upsert, true}]
     )
