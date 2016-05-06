@@ -258,7 +258,9 @@ defmodule Bombero.GameState do
   end
 
   defstate set_37 do
-    defevent choose(:set_37_option_1), do: next_state(:set_39)
+    defevent choose(:set_37_option_1), data: data do
+      next_state(:set_39, %{ data | character_armor: "plate" })
+    end
   end
 
   # The branch from Set 38, Option 2 is supposed to test a flag:

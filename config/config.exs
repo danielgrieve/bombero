@@ -181,8 +181,6 @@ config :bombero, sets: %{
     options: ["Wear the armor"]
   },
 
-  # Set 37 should set a flag:
-  #   characterArmor = "plate"
   set_37: %{
     text: "The armor settles on your shoulders once again. There's no mistake: it carries with it some of the energy of your youth.",
     options: ["Leave the farmhouse"]
