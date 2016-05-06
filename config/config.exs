@@ -121,8 +121,6 @@ config :bombero, sets: %{
     options: ["Set out"]
   },
 
-  # Set 25 should set a flag:
-  #   characterArmor = "leather"
   set_25: %{
     text: "You release the bird and cross to your door. But the Empress's message echoes: \"Travel in livery.\" Now where did you hide that damnable armor?",
     options: ["Look around"]
@@ -148,10 +146,6 @@ config :bombero, sets: %{
     options: ["Open the chest"]
   },
 
-  # Set 30 should set three flags:
-  #   platePolished = "false"
-  #   armorWorn = "false"
-  #   boxOpened = "false"
   set_30: %{
     text: "In the chest, dusty with years of disuse, your plate armor waits patiently, livery of a Protector of the Long Realm. A musty wooden box you don't remember waits alongside your helm.",
     options: ["Open the box", "Wear the armor"]

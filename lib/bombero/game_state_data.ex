@@ -1,5 +1,9 @@
 defmodule Bombero.GameStateData do
-  defstruct id: 0, character_armor: nil
+  defstruct id: 0,
+            character_armor: nil,
+            plate_polished: nil,
+            armor_worn: nil,
+            box_opened: nil
 end
 
 # Copy + paste from Enumerable.Map for Mongo's benefit

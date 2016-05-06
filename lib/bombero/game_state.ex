@@ -158,8 +158,19 @@ defmodule Bombero.GameState do
   end
 
   defstate set_30 do
-    defevent choose(:set_30_option_1), do: next_state(:set_31)
-    defevent choose(:set_30_option_2), do: next_state(:set_34)
+    defevent choose(:set_30_option_1), data: data do
+      data = add_set_30_flags(data)
+      next_state(:set_31, data)
+    end
+
+    defevent choose(:set_30_option_2), data: data do
+      data = add_set_30_flags(data)
+      next_state(:set_34, data)
+    end
+  end
+
+  defp add_set_30_flags(data) do
+    %{ data | plate_polished: false, armor_worn: false, box_opened: false }
   end
 
   # The branch from Set 31, Option 2 is supposed to test a flag:
