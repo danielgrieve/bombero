@@ -151,8 +151,6 @@ config :bombero, sets: %{
     options: ["Open the box", "Wear the armor"]
   },
 
-  # Set 31 should set a flag:
-  #   boxOpened = "true"
   set_31: %{
     text: "A few rags, grey with oils and lye, are stuffed haphazardly inside.",
     options: ["Take rags", "Wear the armor"]
