@@ -171,8 +171,6 @@ config :bombero, sets: %{
     options: ["Take off the armor", "Leave the farmhouse"]
   },
 
-  # Set 35 should set a flag:
-  #   characterArmor = "none"
   set_35: %{
     text: "You place the armor in the chest again, beside the box of greasy rags.",
     options: ["Take rags", "Wear the armor"]
