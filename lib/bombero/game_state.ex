@@ -131,7 +131,10 @@ defmodule Bombero.GameState do
   end
 
   defstate set_25 do
-    defevent choose(:set_25_option_1), do: next_state(:set_26)
+    defevent choose(:set_25_option_1), data: data do
+      data = %{ data | character_armor: "leather" }
+      next_state(:set_26, data)
+    end
   end
 
   defstate set_26 do

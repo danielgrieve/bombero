@@ -35,4 +35,11 @@ defmodule Bombero.GameStateTest do
     before_state = subject.state
     assert GameState.choose(subject, :invalid).state == before_state
   end
+
+  test "set_25", %{subject: subject} do
+    subject = %{ subject | state: :set_25 }
+    subject = GameState.choose(subject, :set_25_option_1)
+
+    assert subject.data.character_armor == "leather"
+  end
 end

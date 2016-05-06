@@ -1,5 +1,5 @@
 defmodule Bombero.GameStateData do
-  defstruct id: 0
+  defstruct id: 0, character_armor: nil
 end
 
 # Copy + paste from Enumerable.Map for Mongo's benefit
