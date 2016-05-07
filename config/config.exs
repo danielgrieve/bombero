@@ -286,7 +286,9 @@ config :bombero, sets: %{
   }
 }
 
-config :bombero, messenger: Bombero.Messenger
+config :bombero,
+  messenger: Bombero.Messenger,
+  server: true
 
 if File.exists?("config/#{Mix.env}.exs") do
   import_config "#{Mix.env}.exs"

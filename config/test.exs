@@ -17,7 +17,9 @@ config :bombero, sets: %{
   }
 }
 
-config :bombero, messenger: Bombero.TestMessenger
+config :bombero,
+  messenger: Bombero.TestMessenger,
+  server: false
 
 config :bombero, Bombero.Database,
   database: "bombero-test"
