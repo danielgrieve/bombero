@@ -57,28 +57,78 @@ defmodule Bombero.GameStateTest do
   end
 
   @tag state: :set_31
-  test "set_31", %{subject: subject} do
+  test "set_31 state", %{subject: subject} do
+    assert GameState.choose(subject, :set_31_option_2).state == :set_37
+
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    assert GameState.choose(subject, :set_31_option_2).state == :set_34
+  end
+
+  @tag state: :set_31
+  test "set_31 data", %{subject: subject} do
     subject = GameState.choose(subject, :set_31_option_1)
     assert subject.data.box_opened == true
   end
 
+  @tag state: :set_32
+  test "set_32 state", %{subject: subject} do
+    data = subject.data
+
+    assert GameState.choose(subject, :set_32_option_1).state == :set_36
+    subject = %{ subject | data: %{ subject.data | plate_polished: false } }
+    assert GameState.choose(subject, :set_32_option_1).state == :set_33
+    subject = %{ subject | data: data }
+
+    assert GameState.choose(subject, :set_32_option_2).state == :set_37
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    assert GameState.choose(subject, :set_32_option_2).state == :set_34
+  end
+
   @tag state: :set_33
-  test "set_33", %{subject: subject} do
+  test "set_33 data", %{subject: subject} do
     subject = GameState.choose(subject, :set_33_option_1)
     assert subject.data.plate_polished == true
   end
 
+  @tag state: :set_33
+  test "set_33 state", %{subject: subject} do
+    assert GameState.choose(subject, :set_33_option_1).state == :set_37
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    assert GameState.choose(subject, :set_33_option_1).state == :set_34
+  end
+
   @tag state: :set_34
-  test "set_34", %{subject: subject} do
+  test "set_34 data", %{subject: subject} do
     subject = GameState.choose(subject, :set_34_option_1)
     assert subject.data.character_armor == "plate"
     assert subject.data.armor_worn == true
   end
 
+  @tag state: :set_34
+  test "set_34 state", %{subject: subject} do
+    assert GameState.choose(subject, :set_34_option_1).state == :set_38
+    subject = %{ subject | data: %{ subject.data | box_opened: true } }
+    assert GameState.choose(subject, :set_34_option_1).state == :set_35
+  end
+
   @tag state: :set_35
-  test "set_35", %{subject: subject} do
+  test "set_35 data", %{subject: subject} do
     subject = GameState.choose(subject, :set_35_option_1)
     assert subject.data.character_armor == nil
+  end
+
+  @tag state: :set_35
+  test "set_35 state", %{subject: subject} do
+    assert GameState.choose(subject, :set_35_option_2).state == :set_37
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    assert GameState.choose(subject, :set_35_option_2).state == :set_34
+  end
+
+  @tag state: :set_36
+  test "set_36 state", %{subject: subject} do
+    assert GameState.choose(subject, :set_36_option_1).state == :set_37
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    assert GameState.choose(subject, :set_36_option_1).state == :set_34
   end
 
   @tag state: :set_37
@@ -88,8 +138,15 @@ defmodule Bombero.GameStateTest do
   end
 
   @tag state: :set_38
-  test "set_38", %{subject: subject} do
+  test "set_38 data", %{subject: subject} do
     subject = GameState.choose(subject, :set_38_option_1)
     assert subject.data.character_armor == nil
+  end
+
+  @tag state: :set_38
+  test "set_38 state", %{subject: subject} do
+    assert GameState.choose(subject, :set_38_option_2).state == :set_37
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    assert GameState.choose(subject, :set_38_option_2).state == :set_34
   end
 end
