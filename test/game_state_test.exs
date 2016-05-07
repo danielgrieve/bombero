@@ -42,21 +42,15 @@ defmodule Bombero.GameStateTest do
     assert GameState.choose(subject, :invalid).state == before_state
   end
 
+  @tag state: :set_25
   test "set_25", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_25)
-      |> GameState.choose(:set_25_option_1)
-
+    subject = GameState.choose(subject, :set_25_option_1)
     assert subject.data.character_armor == "leather"
   end
 
+  @tag state: :set_30
   test "set_30", %{subject: subject} do
-    subject =
-      subject
-      |> Map.put(:state, :set_30)
-      |> GameState.choose(:set_30_option_1)
-
+    subject = GameState.choose(subject, :set_30_option_1)
     assert subject.data.plate_polished == false
     assert subject.data.armor_worn == false
     assert subject.data.box_opened == false
