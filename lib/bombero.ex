@@ -15,5 +15,5 @@ defmodule Bombero do
   end
 
   defp server_child(false), do: []
-  defp server_child(_), do: worker(Bombero.Server, [])
+  defp server_child(_), do: [worker(Bombero.Server, [])]
 end
