@@ -367,11 +367,13 @@ defmodule Bombero.GameState do
   end
 
   defstate set_53 do
-    defevent choose(:set_53_option_1), do: next_state(:set_1)
+    defevent choose(:set_53_option_1), data: data do
+      next_state(:set_1, %Bombero.GameStateData{id: data.id})
+    end
   end
 
-  defevent restart do
-    next_state(:set_1)
+  defevent restart, data: data do
+    next_state(:set_1, %Bombero.GameStateData{id: data.id})
   end
 
   defevent _, state: state do

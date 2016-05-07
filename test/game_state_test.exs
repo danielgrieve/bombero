@@ -1,7 +1,7 @@
 defmodule Bombero.GameStateTest do
   use ExUnit.Case
 
-  alias Bombero.GameState
+  alias Bombero.{GameState, GameStateData}
 
   setup config do
     game_state = GameState.new
@@ -148,5 +148,12 @@ defmodule Bombero.GameStateTest do
     assert GameState.choose(subject, :set_38_option_2).state == :set_37
     subject = %{ subject | data: %{ subject.data | armor_worn: false } }
     assert GameState.choose(subject, :set_38_option_2).state == :set_34
+  end
+
+  @tag state: :set_53
+  test "set_53 data", %{subject: subject} do
+    subject = %{ subject | data: %{ subject.data | armor_worn: false } }
+    subject = GameState.choose(subject, :set_53_option_1)
+    assert subject.data == %GameStateData{}
   end
 end
